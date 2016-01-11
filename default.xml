@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+
+  <default sync-j="4" revision="fido"/>
+
+  <remote fetch="https://git.yoctoproject.org/git" name="yocto"/>
+  <remote fetch="https://github.com/Freescale" name="freescale"/>
+  <remote fetch="https://github.com/openembedded" name="oe"/>
+  <remote fetch="https://github.com/microchip-ais" name="microchip"/>
+
+  <project remote="yocto" revision="fido" name="poky" path="sources/poky"/>
+  <project remote="yocto" revision="fido" name="meta-fsl-arm" path="sources/meta-fsl-arm"/>
+
+  <project remote="oe" revision="fido" name="meta-openembedded" path="sources/meta-openembedded"/>
+
+  <project remote="microchip" revision="fido" name="mchp-fsl-bsp-base.git" path="sources/base">
+	<copyfile dest="README.adoc" src="README.adoc"/>
+	<copyfile dest="setup-environment" src="setup-environment"/>
+  </project>
+
+  <project remote="freescale" revision="fido" name="meta-fsl-arm-extra" path="sources/meta-fsl-arm-extra"/>
+  <project remote="freescale" revision="fido" name="meta-fsl-demos" path="sources/meta-fsl-demos"/>
+  <project remote="freescale" revision="fido" name="Documentation" path="sources/Documentation"/>
+  <project remote="microchip" revision="fido" name="meta-mchp-most-fsl.git" path="sources/meta-mchp-most"/>
+
+</manifest>

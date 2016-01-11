@@ -1,0 +1,45 @@
+= FSL Community BSP with the Microchip MOST Linux Driver 
+
+This project was inspired by the Freescale's Community Yocto BSP.
+
+For more information see::
+    https://github.com/Freescale/fsl-community-bsp-platform and
+    https://github.com/Freescale/fsl-community-bsp-base
+
+To get the BSP you need to have `repo` installed and use it as:
+
+Install the `repo` utility:
+
+[source,console]
+$: mkdir ~/bin
+$: curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+$: chmod a+x ~/bin/repo
+$: PATH=${PATH}:~/bin
+
+Download the BSP source:
+
+[source,console]
+$: mkdir mchp-fsl-bsp
+$: cd mchp-fsl-bsp
+$: repo init -u https://github.com/microchip-ais/mchp-fsl-bsp-base.git -b fido
+$: repo sync
+
+You can use any directory to host your BSP sources.
+
+At the end of the commands you have every metadata you need to start work with.
+
+The source code is checked out at `mchp-fsl-bsp/sources`.
+
+To start a simple image build:
+
+[source,console]
+$: source ./setup-environment build
+$: bitbake core-image-minimal
+
+You can use any directory to host your build.
+
+Find built artefacts including an sdcard image, zImage and a tarball with
+kernel modules in `~/mchp-fsl-bsp/build/tmp/deploy/images/imx6qsabreauto/`.
+
+The MOST Linux Driver kernel modules can also be found in the directory
+`/lib/modules/<kernel-version>/kernel/drivers/staging/most` of the target.
