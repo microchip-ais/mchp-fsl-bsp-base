@@ -1,10 +1,12 @@
-= FSL Community BSP with the Microchip MOST Linux Driver 
+= FSL Community BSP with the Microchip MOST Linux Driver
 
 This project was inspired by the Freescale's Community Yocto BSP.
 
-For more information see::
+See also::
     https://github.com/Freescale/fsl-community-bsp-platform and
     https://github.com/Freescale/fsl-community-bsp-base
+
+=== Setup and build
 
 To get the BSP you need to have `repo` installed and use it as:
 
@@ -24,28 +26,60 @@ $ cd mchp-fsl-bsp
 $ repo init -u https://github.com/microchip-ais/mchp-fsl-bsp-base.git -b fido
 $ repo sync
 
-You can use any directory to host your BSP sources.
-
 At the end of the commands you have every metadata you need to start work with.
 
 The source code is checked out at `mchp-fsl-bsp/sources`.
 
-To start a simple image build for imx6qsabreauto:
+To start a simple image build for the default machine `imx6qsabreauto`:
 
 [source,console]
 $ source ./setup-environment build
 $ bitbake core-image-minimal
 
-To start a simple image build for nitrogen6x:
+To start a simple image build for the machine `nitrogen6x`:
 
 [source,console]
 $ MACHINE=nitrogen6x source ./setup-environment build
 $ bitbake core-image-minimal
 
-You can use any directory to host your build.
+=== List of available images
+
+To see possible images to bake:
+
+[source,console]
+$ bitbake-layers show-recipes "*-image-*" | grep -v "^\s"
+
+=== Built artefacts
 
 Find built artefacts including an sdcard image, zImage and a tarball with
 kernel modules in `~/mchp-fsl-bsp/build/tmp/deploy/images/<machine-name>/`.
 
 The MOST Linux Driver kernel modules can also be found in the directory
 `/lib/modules/<kernel-version>/kernel/drivers/staging/most` of the target.
+
+=== gstreamer with plugins
+
+To use the gstreamer with the full stack of its plugins including commercial
+ones, you need to include the following lines into your
+`~/mchp-fsl-bsp/build/build/conf/local.conf`:
+
+[source]
+----
+LICENSE_FLAGS_WHITELIST = "commercial"
+
+IMAGE_INSTALL_append = " \
+    packagegroup-fsl-gstreamer \
+    packagegroup-fsl-gstreamer-full \
+    packagegroup-fsl-tools-gpu \
+    packagegroup-fsl-tools-gpu-external \
+    gstreamer1.0-plugins-imx \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-plugins-ugly \
+"
+----
+
+See also::
+    https://community.freescale.com/docs/DOC-95254 and
+    https://boundarydevices.com/fido-release-of-yocto
